@@ -2,6 +2,7 @@
 Time: O(n)
 Space: O(1)
 Problem: https://projecteuler.net/problem=8
+Intuition: sliding window, keep product of non-zero digits and zero count, careful to avoid zero division
 
 Input:
 4

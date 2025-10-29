@@ -2,6 +2,7 @@
 Time: O(1)
 Space: O(1)
 Problem: https://projecteuler.net/problem=1
+Intuition: inclusion-exclusion
 
 Input:
 10

@@ -22,7 +22,3 @@ jobs:
 
       - name: Run all C++ tests
         run: ./scripts/test_cpp.sh True
-
-      - name: Verify no failures
-        run: |
-          echo "All C++ tests executed successfully"
