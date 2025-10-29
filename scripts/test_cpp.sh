@@ -5,6 +5,9 @@ PROBLEM=$2    # Problem number (if ALL=False)
 
 cd cpp || { echo "cpp directory not found"; exit 1; }
 
+# Track overall pass status
+all_passed=true
+
 # Function to test a single problem
 run_tests() {
     local name=$1
@@ -13,6 +16,7 @@ run_tests() {
 
     if [ ! -d "$test_dir" ]; then
         echo "No test folder found for problem $name"
+        all_passed=false
         return
     fi
 
@@ -22,6 +26,7 @@ run_tests() {
     g++ -O2 "$name.cpp" -o "$name".o
     if [ $? -ne 0 ]; then
         echo "Compilation failed for $name.cpp"
+        all_passed=false
         return
     fi
 
@@ -57,6 +62,7 @@ run_tests() {
             echo "   Differences:"
             diff -b -B --strip-trailing-cr "$out_file" "$ans_file"
             echo "   (stopping early)"
+            all_passed=false
             return
         fi
     done
@@ -66,6 +72,7 @@ run_tests() {
         echo "All tests passed for $name ($passed_tests/$total_tests, max ${longest_time}ms)"
     else
         echo "Some tests failed for $name ($passed_tests/$total_tests passed)"
+        all_passed=false
     fi
 }
 
@@ -82,4 +89,13 @@ else
         exit 1
     fi
     run_tests "$PROBLEM"
+fi
+
+# Final verification
+if [ "$all_passed" = true ]; then
+    echo "All C++ tests executed successfully"
+    exit 0
+else
+    echo "Some tests failed"
+    exit 1
 fi

@@ -1,0 +1,28 @@
+name: 🧪 C++ Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up environment
+        run: sudo apt-get update && sudo apt-get install -y g++
+
+      - name: Make test script executable
+        run: chmod +x scripts/test_cpp.sh
+
+      - name: Run all C++ tests
+        run: ./scripts/test_cpp.sh True
+
+      - name: Verify no failures
+        run: |
+          echo "All C++ tests executed successfully"
